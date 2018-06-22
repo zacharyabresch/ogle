@@ -1,13 +1,13 @@
-const fs = require("fs");
-const path = require("path");
-const debug = require("debug")("Ogle");
-const Nightmare = require("nightmare");
+const fs = require('fs');
+const path = require('path');
+const debug = require('debug')('Ogle');
+const Nightmare = require('nightmare');
 
 const WAIT_TIMEOUT = 2000;
 const NIGHTMARE_OPTIONS = {
   show: true,
   switches: {
-    "ignore-certificate-errors": true
+    'ignore-certificate-errors': true
   },
   waitTimeout: WAIT_TIMEOUT
 };
@@ -18,12 +18,12 @@ class Ogle {
   constructor({
     base,
     test,
-    imagesPath = "/ogle/images",
+    imagesPath = '/ogle/images',
     nightmare = null
   } = {}) {
-    debug("constructing");
+    debug('constructing');
     if (!base || !test) {
-      throw new Error("required params not provided");
+      throw new Error('required params not provided');
     }
     this.base = base;
     this.test = test;
@@ -37,7 +37,7 @@ class Ogle {
   }
 
   static createImageDirectory(imagesPath) {
-    debug("createImageDirectory", imagesPath);
+    debug('createImageDirectory', imagesPath);
     imagesPath.split(path.sep).reduce((pathTracker, folder) => {
       const currentPath = pathTracker + folder + path.sep;
       if (!fs.existsSync(currentPath)) {
@@ -50,12 +50,12 @@ class Ogle {
   capture() {
     this.nightmare
       .goto(this.base)
-      .screenshot("./ogle/images/base.png")
+      .screenshot('./ogle/images/base.png')
       .goto(this.test)
-      .screenshot("./ogle/images/test.png")
+      .screenshot('./ogle/images/test.png')
       .end()
       .then(() => {
-        console.log("success!");
+        console.log('success!');
         console.log(this);
       })
       .catch(error => console.error(error));
