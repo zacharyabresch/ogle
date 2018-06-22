@@ -28,5 +28,8 @@
   "dependencies": {
     "debug": "^3.1.0",
     "nightmare": "^3.0.1"
+  },
+  "prettier": {
+    "singleQuotes": true
   }
 }
