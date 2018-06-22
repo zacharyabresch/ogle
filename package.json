@@ -7,12 +7,15 @@
     "start": "parcel ./src/index.js",
     "test": "jest",
     "test:watch": "npm t -- --watchAll",
-    "precommit": "pretty-quick --staged"
+    "precommit": "pretty-quick --staged",
+    "docs:serve": "documentation serve src/index.js",
+    "docs:build": "documentation build src/index.js"
   },
   "keywords": [],
   "author": "Zachary Abresch <zachary.abresch@thoughtindustries.com>",
   "license": "ISC",
   "devDependencies": {
+    "documentation": "^8.0.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-plugin-import": "^2.12.0",
