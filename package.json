@@ -26,6 +26,7 @@
     "pretty-quick": "^1.6.0"
   },
   "dependencies": {
-    "debug": "^3.1.0"
+    "debug": "^3.1.0",
+    "nightmare": "^3.0.1"
   }
 }

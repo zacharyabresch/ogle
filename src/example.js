@@ -1,3 +1,10 @@
-const origin = require('./');
+const Ogle = require("./Ogle");
 
-console.log(origin);
+const options = {
+  base: "https://home.ti.dev/",
+  test: "https://home.ti.dev/?enableBetaLogo=true"
+};
+
+const ogle = new Ogle(options);
+
+ogle.capture();

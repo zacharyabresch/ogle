@@ -4,7 +4,8 @@ let ogle;
 
 const options = {
   base: "https://home.ti.dev/",
-  test: "https://home.ti.dev/?enableBetaLogo=true"
+  test: "https://home.ti.dev/?enableBetaLogo=true",
+  nightmare
 };
 const nullit = () => {
   ogle = null;
@@ -30,17 +31,21 @@ describe("Ogle", () => {
       it("sets @base", () => expect(ogle.base).toBe("https://home.ti.dev/"));
       it("sets @test", () =>
         expect(ogle.test).toBe("https://home.ti.dev/?enableBetaLogo=true"));
+      it("sets @imagesPath", () =>
+        expect(ogle.imagesPath).toBe("/ogle/images"));
+      it("sets @nightmare", () => expect(ogle.nightmare).toBe(nightmare));
     });
 
-    describe("#capture", () => {
-      it("is defined", () => expect(ogle.capture).toBeDefined());
-    });
+    // describe('#capture', () => {
+    //   // beforeEach(() => {
+    //   //   ogle.capture();
+    //   // });
+    //   it('is defined', () => expect(ogle.capture).toBeDefined());
+
+    //   it('should call `nightmare.goto`', () => {
+    //     ogle.capture();
+    //     expect(nightmare.goto).toHaveBeenCalled();
+    //   });
+    // });
   });
-});
-
-this.nightmare = new Nightmare({
-  show: true,
-  switches: {
-    "ignore-certificate-errors": true
-  }
 });
