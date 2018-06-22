@@ -1,9 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 const debug = require('debug')('Ogle');
+const looksSame = require('looks-same');
 const Nightmare = require('nightmare');
 
-const WAIT_TIMEOUT = 2000;
+const WAIT_TIMEOUT = 5000;
 const NIGHTMARE_OPTIONS = {
   show: true,
   switches: {
@@ -18,7 +19,7 @@ class Ogle {
   constructor({
     base,
     test,
-    imagesPath = '/ogle/images',
+    imagesPath = './ogle/images',
     nightmare = null
   } = {}) {
     debug('constructing');
@@ -30,8 +31,8 @@ class Ogle {
     this.imagesPath = imagesPath;
     this.nightmare = nightmare || new Nightmare(NIGHTMARE_OPTIONS);
     this.paths = {
-      base: `${path.resolve(__dirname, this.imagesPath)}/base.png`,
-      test: `${path.resolve(__dirname, this.imagesPath)}/test.png`
+      base: `${this.imagesPath}/base.png`,
+      test: `${this.imagesPath}/test.png`
     };
     Ogle.createImageDirectory(this.imagesPath);
   }
@@ -48,17 +49,32 @@ class Ogle {
   }
 
   capture() {
+    debug('capturing ...');
     this.nightmare
       .goto(this.base)
-      .screenshot('./ogle/images/base.png')
+      .screenshot(this.paths.base)
       .goto(this.test)
-      .screenshot('./ogle/images/test.png')
+      .screenshot(this.paths.test)
       .end()
       .then(() => {
         console.log('success!');
-        console.log(this);
+        this.compare();
       })
       .catch(error => console.error(error));
+  }
+
+  compare() {
+    debug('comparing ...');
+    looksSame.createDiff(
+      {
+        reference: this.paths.base,
+        current: this.paths.test,
+        diff: `${this.imagesPath}/diff.png`,
+        highlightColor: '#FF8D33',
+        tolerance: 1
+      },
+      err => console.error(err)
+    );
   }
 }
 

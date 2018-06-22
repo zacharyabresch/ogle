@@ -1,51 +1,47 @@
-const Ogle = require("./Ogle");
+const Ogle = require('./Ogle');
 
 let ogle;
 
 const options = {
-  base: "https://home.ti.dev/",
-  test: "https://home.ti.dev/?enableBetaLogo=true",
+  base: 'https://home.ti.dev/',
+  test: 'https://home.ti.dev/?enableBetaLogo=true',
   nightmare
 };
 const nullit = () => {
   ogle = null;
 };
 
-describe("Ogle", () => {
+describe('Ogle', () => {
   afterEach(nullit);
-  describe("with invalid params", () => {
-    it("should throw error", () => {
+  describe('with invalid params', () => {
+    it('should throw error', () => {
       expect(() => {
         ogle = new Ogle();
       }).toThrow();
     });
   });
-  describe("with valid params", () => {
+  describe('with valid params', () => {
     beforeEach(() => {
       ogle = new Ogle(options);
     });
-    it("is an instance of `Ogle`", () => expect(ogle).toBeInstanceOf(Ogle));
-    it("is defined", () => expect(ogle).toBeDefined());
+    it('is an instance of `Ogle`', () => expect(ogle).toBeInstanceOf(Ogle));
+    it('is defined', () => expect(ogle).toBeDefined());
 
-    describe("#constructor", () => {
-      it("sets @base", () => expect(ogle.base).toBe("https://home.ti.dev/"));
-      it("sets @test", () =>
-        expect(ogle.test).toBe("https://home.ti.dev/?enableBetaLogo=true"));
-      it("sets @imagesPath", () =>
-        expect(ogle.imagesPath).toBe("/ogle/images"));
-      it("sets @nightmare", () => expect(ogle.nightmare).toBe(nightmare));
+    describe('#constructor', () => {
+      it('sets @base', () => expect(ogle.base).toBe('https://home.ti.dev/'));
+      it('sets @test', () =>
+        expect(ogle.test).toBe('https://home.ti.dev/?enableBetaLogo=true'));
+      it('sets @imagesPath', () =>
+        expect(ogle.imagesPath).toBe('/ogle/images'));
+      it('sets @nightmare', () => expect(ogle.nightmare).toBe(nightmare));
     });
 
-    // describe('#capture', () => {
-    //   // beforeEach(() => {
-    //   //   ogle.capture();
-    //   // });
-    //   it('is defined', () => expect(ogle.capture).toBeDefined());
+    describe('#capture', () => {
+      it('is defined', () => expect(ogle.capture).toBeDefined());
+    });
 
-    //   it('should call `nightmare.goto`', () => {
-    //     ogle.capture();
-    //     expect(nightmare.goto).toHaveBeenCalled();
-    //   });
-    // });
+    describe('#compare', () => {
+      it('is defined', () => expect(ogle.compare).toBeDefined());
+    });
   });
 });
