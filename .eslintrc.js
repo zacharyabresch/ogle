@@ -5,6 +5,7 @@ module.exports = {
   },
   rules: {
     'no-console': 'off',
-    quotes: ['error', 'single']
+    quotes: ['error', 'single'],
+    'comma-dangle': 'off'
   }
 };
