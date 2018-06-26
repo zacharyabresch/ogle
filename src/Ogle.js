@@ -1,80 +1,65 @@
-const fs = require('fs');
-const path = require('path');
 const debug = require('debug')('Ogle');
 const looksSame = require('looks-same');
 const Nightmare = require('nightmare');
+const ImageDirectory = require('./ImageDirectory');
+const { NIGHTMARE_OPTIONS, LOOKS_SAME_OPTIONS } = require('./constants');
+const { buildPathMap } = require('./fns');
 
-const WAIT_TIMEOUT = 5000;
-const NIGHTMARE_OPTIONS = {
-  show: true,
-  switches: {
-    'ignore-certificate-errors': true
-  },
-  waitTimeout: WAIT_TIMEOUT
-};
-
-/** Class for visual diffing between domains */
+/**
+ * Class for visual diffing between domain
+ * @param {Object}  options                                 - The parameter object
+ * @param {Object}  options.urls                            - The urls object
+ * @param  {String} options.urls.base                       - The base URL
+ * @param  {String} options.urls.test                       - The comparison URL
+ * @param  {String} [options.imagesPath='./ogle/images']    - The path to images
+ * @return {Object}                                         - The Ogle instance
+ */
 class Ogle {
-  /** Creates Ogle instance */
-  constructor({
-    base,
-    test,
-    imagesPath = './ogle/images',
-    nightmare = null
-  } = {}) {
+  constructor({ urls: { base, test }, imagesPath = './ogle/images' }) {
     debug('constructing');
     if (!base || !test) {
       throw new Error('required params not provided');
     }
-    this.base = base;
-    this.test = test;
-    this.imagesPath = imagesPath;
-    this.nightmare = nightmare || new Nightmare(NIGHTMARE_OPTIONS);
-    this.paths = {
-      base: `${this.imagesPath}/base.png`,
-      test: `${this.imagesPath}/test.png`
-    };
-    Ogle.createImageDirectory(this.imagesPath);
+
+    this.urls = new Map([['base', base], ['test', test]]);
+    this.paths = buildPathMap(imagesPath);
+    this.looksSameOptions = LOOKS_SAME_OPTIONS(this);
+    this.nightmare = new Nightmare(NIGHTMARE_OPTIONS);
+    this.imagesDirectory = new ImageDirectory(imagesPath);
   }
 
-  static createImageDirectory(imagesPath) {
-    debug('createImageDirectory', imagesPath);
-    imagesPath.split(path.sep).reduce((pathTracker, folder) => {
-      const currentPath = pathTracker + folder + path.sep;
-      if (!fs.existsSync(currentPath)) {
-        fs.mkdirSync(currentPath);
-      }
-      return currentPath;
-    });
-  }
-
+  /**
+   * Kicks off capturing of screenshots
+   */
   capture() {
     debug('capturing ...');
     this.nightmare
-      .goto(this.base)
-      .screenshot(this.paths.base)
-      .goto(this.test)
-      .screenshot(this.paths.test)
+      .goto(this.urls.get('base'))
+      .screenshot(this.paths.get('base'))
+      .goto(this.urls.get('test'))
+      .screenshot(this.paths.get('test'))
       .end()
       .then(() => {
-        console.log('success!');
+        debug('success!');
         this.compare();
       })
       .catch(error => console.error(error));
   }
 
+  /**
+   * Generates diff after comparing images
+   */
   compare() {
     debug('comparing ...');
-    looksSame.createDiff(
-      {
-        reference: this.paths.base,
-        current: this.paths.test,
-        diff: `${this.imagesPath}/diff.png`,
-        highlightColor: '#FF8D33',
-        tolerance: 1
-      },
-      err => console.error(err)
+    looksSame(
+      this.looksSameOptions.reference,
+      this.looksSameOptions.current,
+      (err, equal) => {
+        console.log(err);
+        console.log(equal);
+      }
     );
+    // looksSame.createDiff(this.looksSameOptions, err => console.error(err));
   }
 }
 

@@ -1,15 +1,21 @@
 {
   "name": "ogle",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=8.9.0"
+  },
   "description": "Ogle domains for visual regression",
-  "main": "src/index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "start": "parcel ./src/index.js",
-    "test": "jest",
+    "test": "jest --verbose --coverage",
     "test:watch": "npm t -- --watchAll",
     "precommit": "pretty-quick --staged",
-    "docs:serve": "documentation serve src/index.js",
-    "docs:build": "documentation build src/index.js"
+    "docs:serve": "documentation serve src/Ogle.js",
+    "docs:build": "documentation build src/Ogle.js"
   },
   "keywords": [],
   "author": "Zachary Abresch <zachary.abresch@thoughtindustries.com>",
@@ -21,6 +27,7 @@
     "eslint-plugin-import": "^2.12.0",
     "husky": "^0.14.3",
     "jest": "^23.1.0",
+    "mock-fs": "^4.5.0",
     "parcel": "^1.9.2",
     "prettier": "^1.13.5",
     "pretty-quick": "^1.6.0"

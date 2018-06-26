@@ -3,9 +3,10 @@ const Ogle = require('./Ogle');
 let ogle;
 
 const options = {
-  base: 'https://home.ti.dev/',
-  test: 'https://home.ti.dev/?enableBetaLogo=true',
-  nightmare
+  urls: {
+    base: 'https://home.ti.dev/',
+    test: 'https://home.ti.dev/?enableBetaLogo=true'
+  }
 };
 const nullit = () => {
   ogle = null;
@@ -28,12 +29,13 @@ describe('Ogle', () => {
     it('is defined', () => expect(ogle).toBeDefined());
 
     describe('#constructor', () => {
-      it('sets @base', () => expect(ogle.base).toBe('https://home.ti.dev/'));
-      it('sets @test', () =>
-        expect(ogle.test).toBe('https://home.ti.dev/?enableBetaLogo=true'));
-      it('sets @imagesPath', () =>
-        expect(ogle.imagesPath).toBe('/ogle/images'));
-      it('sets @nightmare', () => expect(ogle.nightmare).toBe(nightmare));
+      it('sets @urls', () => {
+        const expected = new Map([
+          ['base', options.urls.base],
+          ['test', options.urls.test]
+        ]);
+        expect(ogle.urls).toEqual(expected);
+      });
     });
 
     describe('#capture', () => {
