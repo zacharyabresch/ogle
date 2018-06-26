@@ -9,4 +9,7 @@ const options = {
 
 const ogle = new Ogle(options);
 
-ogle.capture();
+ogle
+  .capture()
+  .then(() => console.log('well done!'))
+  .catch(err => console.error(err));

@@ -27,7 +27,7 @@ const LOOKS_SAME_OPTIONS = ({ paths }) => ({
   current: paths.get('test'),
   diff: paths.get('diff'),
   highlightColor: '#FF8D33',
-  tolerance: 1
+  tolerance: 5
 });
 
 module.exports = {
