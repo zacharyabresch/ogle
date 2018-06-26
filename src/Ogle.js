@@ -1,8 +1,8 @@
 const debug = require('debug')('Ogle');
 const looksSame = require('looks-same');
-const Nightmare = require('nightmare');
 const ImageDirectory = require('./ImageDirectory');
-const { NIGHTMARE_OPTIONS, LOOKS_SAME_OPTIONS } = require('./constants');
+const NightmareAdapter = require('./HeadlessClientAdapter/NightmareAdapter');
+const { LOOKS_SAME_OPTIONS } = require('./constants');
 const { buildPathMap } = require('./fns');
 
 /**
@@ -24,16 +24,18 @@ class Ogle {
     this.urls = new Map([['base', base], ['test', test]]);
     this.paths = buildPathMap(imagesPath);
     this.looksSameOptions = LOOKS_SAME_OPTIONS(this);
-    this.nightmare = new Nightmare(NIGHTMARE_OPTIONS);
-    this.imagesDirectory = new ImageDirectory(imagesPath);
+    this.client = new NightmareAdapter();
+    const imageDirectory = new ImageDirectory(imagesPath);
+    imageDirectory.mkdir();
   }
 
   /**
    * Kicks off capturing of screenshots
+   * @return {Promise} thenable yo
    */
   capture() {
     debug('capturing ...');
-    this.nightmare
+    return this.client
       .goto(this.urls.get('base'))
       .screenshot(this.paths.get('base'))
       .goto(this.urls.get('test'))
@@ -41,9 +43,8 @@ class Ogle {
       .end()
       .then(() => {
         debug('success!');
-        this.compare();
-      })
-      .catch(error => console.error(error));
+        return this.compare();
+      });
   }
 
   /**
@@ -51,15 +52,10 @@ class Ogle {
    */
   compare() {
     debug('comparing ...');
-    looksSame(
-      this.looksSameOptions.reference,
-      this.looksSameOptions.current,
-      (err, equal) => {
-        console.log(err);
-        console.log(equal);
-      }
-    );
-    // looksSame.createDiff(this.looksSameOptions, err => console.error(err));
+    return new Promise((resolve, reject) => {
+      looksSame.createDiff(this.looksSameOptions, reject);
+      resolve();
+    });
   }
 }
 

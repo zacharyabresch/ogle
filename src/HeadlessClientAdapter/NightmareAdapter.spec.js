@@ -1,0 +1,1 @@
+describe('NightmareAdapter', () => {});
