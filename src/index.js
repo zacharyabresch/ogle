@@ -7,7 +7,7 @@ if (require.main === module) {
   Ogle = require('./cli');
 } else {
   // module invocation (i.e. required)
-  Ogle = require('./Ogle');
+  Ogle = require('./Ogle/');
 }
 
 module.exports = Ogle;

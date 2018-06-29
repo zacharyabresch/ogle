@@ -1,7 +1,7 @@
 const program = require('commander');
 const ora = require('ora');
 const { exec } = require('child_process');
-const Ogle = require('./Ogle');
+const Ogle = require('./Ogle/');
 
 program
   .version('1.0.0')
