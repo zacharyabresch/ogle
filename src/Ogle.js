@@ -53,8 +53,13 @@ class Ogle {
   compare() {
     debug('comparing ...');
     return new Promise((resolve, reject) => {
-      looksSame.createDiff(this.looksSameOptions, reject);
-      resolve();
+      looksSame.createDiff(this.looksSameOptions, err => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
     });
   }
 }

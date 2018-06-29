@@ -1,3 +1,4 @@
+const { exec } = require('child_process');
 const Ogle = require('./Ogle');
 
 const options = {
@@ -11,5 +12,8 @@ const ogle = new Ogle(options);
 
 ogle
   .capture()
-  .then(() => console.log('well done!'))
+  .then(() => {
+    console.log('well done!');
+    exec('imgcat ./ogle/images/diff.png');
+  })
   .catch(err => console.error(err));

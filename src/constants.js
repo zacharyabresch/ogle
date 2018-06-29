@@ -2,7 +2,7 @@
  * The time Nightmare waits for `goto`
  * @type {Number}
  */
-const WAIT_TIMEOUT = 5000;
+const WAIT_TIMEOUT = 8000;
 /**
  * Options for `Nightmare` construction
  * @type {Object}
