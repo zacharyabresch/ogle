@@ -1,20 +1,19 @@
 const { exec } = require('child_process');
 const Ogle = require('./Ogle');
 
-// const options = {
-//   urls: {
-//     name: 'faces',
-//     base: 'https://home.ti.dev/',
-//     test: 'https://home.ti.dev/?enableBetaLogo=true'
-//   }
-// };
-
 const options = {
-  urls: [
-    { name: 'google', base: 'https://google.com', test: 'https://google.jp' },
-    { name: 'amazon', base: 'https://amazon.com', test: 'http://amazon.co.uk' }
-  ]
+  urls: {
+    base: 'https://home.ti.dev/',
+    test: 'https://home.ti.dev/?enableBetaLogo=true'
+  }
 };
+
+// const options = {
+//   urls: [
+//     { name: 'google', base: 'https://google.com', test: 'https://google.jp' },
+//     { name: 'amazon', base: 'https://amazon.com', test: 'http://amazon.co.uk' }
+//   ]
+// };
 
 const ogle = new Ogle(options);
 

@@ -22,7 +22,7 @@ const NIGHTMARE_OPTIONS = {
  * @param  {String} options.imagesPath  The path to look for & save images
  * @return {Object}                     The constructed options Object literal
  */
-const LOOKS_SAME_OPTIONS = ({ paths }) => ({
+const LOOKS_SAME_OPTIONS = paths => ({
   reference: paths.get('base'),
   current: paths.get('test'),
   diff: paths.get('diff'),
@@ -30,8 +30,11 @@ const LOOKS_SAME_OPTIONS = ({ paths }) => ({
   tolerance: 5
 });
 
+const CAPTURE_VALUES_SET = new Set(['base', 'test', 'diff']);
+
 module.exports = {
   WAIT_TIMEOUT,
   NIGHTMARE_OPTIONS,
-  LOOKS_SAME_OPTIONS
+  LOOKS_SAME_OPTIONS,
+  CAPTURE_VALUES_SET
 };

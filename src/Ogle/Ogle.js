@@ -24,8 +24,7 @@ class Ogle {
   }) {
     debug('constructing');
     this.urls = urls;
-    this.paths = buildPathMap(imagesPath);
-    this.looksSameOptions = LOOKS_SAME_OPTIONS(this);
+    this.imagesPath = imagesPath;
     this.client = injections.client;
     this.differ = injections.differ;
     this.promises = new Set();
@@ -42,20 +41,22 @@ class Ogle {
     return Promise.all(this.promises).catch(err => console.error(err));
   }
 
-  capturePair(map) {
-    debug('capturing pair: ', map);
-    this.client.capturePair([map, this.paths]).then(() => {
+  capturePair(urlMap) {
+    debug('capturing pair: ', urlMap);
+    const paths = buildPathMap(urlMap, this.imagesPath);
+    this.client = buildInjections().client;
+    return this.client.capturePair([urlMap, paths]).then(() => {
       debug('success!');
-      return this.compare();
+      return this.compare(paths);
     });
   }
 
   /**
    * Generates diff after comparing images
    */
-  compare() {
+  compare(paths) {
     debug('comparing ...');
-    return this.differ.createDiff(this.looksSameOptions);
+    return this.differ.createDiff(LOOKS_SAME_OPTIONS(paths));
   }
 
   get urls() {
@@ -66,9 +67,11 @@ class Ogle {
     const urlSet = new Set();
     if (Array.isArray(data)) {
       data.forEach(value => {
-        urlSet.add(new Map(Object.entries(value)));
+        const urlMap = new Map(Object.entries(value));
+        urlSet.add(urlMap);
       });
     } else {
+      data.name = data.name || 'single';
       urlSet.add(new Map(Object.entries(data)));
     }
     this[SYMBOLS.urls] = urlSet;
