@@ -28,16 +28,23 @@ class Ogle {
     this.looksSameOptions = LOOKS_SAME_OPTIONS(this);
     this.client = injections.client;
     this.differ = injections.differ;
+    this.promises = new Set();
     initializeDirectory(imagesPath);
   }
 
   /**
    * Kicks off capturing of screenshots
-   * @return {Promise} thenable yo
+   * @return {Promise} all of them. thenable yo
    */
   capture() {
     debug('capturing ...');
-    return this.client.capturePair([this.urls, this.paths]).then(() => {
+    this.urls.forEach(urlMap => this.promises.add(this.capturePair(urlMap)));
+    return Promise.all(this.promises).catch(err => console.error(err));
+  }
+
+  capturePair(map) {
+    debug('capturing pair: ', map);
+    this.client.capturePair([map, this.paths]).then(() => {
       debug('success!');
       return this.compare();
     });
@@ -55,8 +62,16 @@ class Ogle {
     return this[SYMBOLS.urls];
   }
 
-  set urls(obj) {
-    this[SYMBOLS.urls] = obj;
+  set urls(data) {
+    const urlSet = new Set();
+    if (Array.isArray(data)) {
+      data.forEach(value => {
+        urlSet.add(new Map(Object.entries(value)));
+      });
+    } else {
+      urlSet.add(new Map(Object.entries(data)));
+    }
+    this[SYMBOLS.urls] = urlSet;
   }
 }
 
