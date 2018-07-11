@@ -8,6 +8,13 @@ const options = {
   }
 };
 
+// const options = {
+//   urls: [
+//     { name: 'google', base: 'https://google.com', test: 'https://google.jp' },
+//     { name: 'amazon', base: 'https://amazon.com', test: 'http://amazon.co.uk' }
+//   ]
+// };
+
 const ogle = new Ogle(options);
 
 ogle

@@ -1,6 +1,5 @@
 const program = require('commander');
 const ora = require('ora');
-const { exec } = require('child_process');
 const Ogle = require('./Ogle/');
 
 program
@@ -26,7 +25,6 @@ ogle
   .capture()
   .then(() => {
     spinner.succeed('Ogling complete!').stop();
-    exec('imgcat ./ogle/images/diff.png');
   })
   .catch(err => {
     console.error(err);
