@@ -6,33 +6,50 @@
   },
   "description": "Ogle domains for visual regression",
   "main": "src/index.js",
-  "bin": "src/index.js",
+  "bin": {
+    "ogle": "dist/main.js"
+  },
   "files": [
     "dist"
   ],
   "scripts": {
-    "start": "parcel ./src/index.js",
-    "build": "parcel build ./src/index.js",
-    "test": "jest --verbose --coverage",
+    "clean": "rimraf dist",
+    "test": "jest",
+    "test:verbose": "jest --verbose",
+    "test:coverage": "jest --verbose --coverage",
     "test:watch": "npm t -- --watchAll",
+    "t:w": "npm run test:watch",
+    "lint": "eslint src --color",
+    "start": "npm run clean && webpack --watch --mode=development",
+    "build": "npm run clean && webpack --mode=production",
     "precommit": "pretty-quick --staged",
-    "docs:serve": "documentation serve src/Ogle.js",
-    "docs:build": "documentation build src/Ogle.js"
+    "docs:serve": "documentation serve src/",
+    "docs:build": "documentation build -o docs/ -f html src/"
   },
   "keywords": [],
   "author": "Zachary Abresch <zachary.abresch@thoughtindustries.com>",
   "license": "ISC",
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.4.0",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
     "documentation": "^8.0.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-prettier": "^2.6.2",
     "husky": "^0.14.3",
     "jest": "^23.1.0",
     "mock-fs": "^4.5.0",
     "prettier": "^1.13.5",
-    "pretty-quick": "^1.6.0"
+    "pretty-quick": "^1.6.0",
+    "rimraf": "^2.6.2",
+    "webpack": "^4.16.0",
+    "webpack-cli": "^3.0.8",
+    "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
     "commander": "^2.15.1",
@@ -40,8 +57,5 @@
     "looks-same": "^3.3.0",
     "nightmare": "^3.0.1",
     "ora": "^2.1.0"
-  },
-  "prettier": {
-    "singleQuote": true
   }
 }

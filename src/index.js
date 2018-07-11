@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /* eslint global-require: "off" */
 
 let Ogle;

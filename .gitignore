@@ -67,3 +67,5 @@ typings/
 dist/
 ogle-images/
 **/.DS_Store
+coverage/
+docs/
