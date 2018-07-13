@@ -11,6 +11,7 @@ const entry = {
 module.exports = {
   target: 'node',
   externals: [nodeExternals()],
+  bail: false,
   entry,
   output: {
     path: path.resolve(__dirname, 'dist'),

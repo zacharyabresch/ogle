@@ -1,0 +1,12 @@
+[
+  {
+    "name": "google",
+    "base": "https://google.com",
+    "test": "https://google.jp"
+  },
+  {
+    "name": "amazon",
+    "base": "https://amazon.com",
+    "test": "http://amazon.co.uk"
+  }
+]

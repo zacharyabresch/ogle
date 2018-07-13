@@ -13,18 +13,20 @@
     "dist"
   ],
   "scripts": {
-    "clean": "rimraf dist",
+    "start": "nodemon -e js -x \"npm run build\" -w ./src",
     "test": "jest",
     "test:verbose": "jest --verbose",
     "test:coverage": "jest --verbose --coverage",
     "test:watch": "npm t -- --watchAll",
     "t:w": "npm run test:watch",
+    "clean": "rimraf dist",
     "lint": "eslint src --color",
-    "start": "npm run clean && webpack --watch --mode=development",
-    "build": "npm run clean && webpack --mode=production",
+    "pack": "webpack --mode=production && chmod +x dist/main.js",
+    "build": "npm run clean && npm run pack",
     "precommit": "pretty-quick --staged",
     "docs:serve": "documentation serve src/",
-    "docs:build": "documentation build -o docs/ -f html src/"
+    "docs:build": "documentation build -o docs/ -f html src/",
+    "preinstall": "npm run build"
   },
   "keywords": [],
   "author": "Zachary Abresch <zachary.abresch@thoughtindustries.com>",
@@ -44,6 +46,7 @@
     "husky": "^0.14.3",
     "jest": "^23.1.0",
     "mock-fs": "^4.5.0",
+    "nodemon": "^1.18.1",
     "prettier": "^1.13.5",
     "pretty-quick": "^1.6.0",
     "rimraf": "^2.6.2",
