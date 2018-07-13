@@ -3,10 +3,7 @@ const Ogle = require('./Ogle');
 let ogle;
 
 const options = {
-  urls: {
-    base: 'https://home.ti.dev/',
-    test: 'https://home.ti.dev/?enableBetaLogo=true'
-  }
+  urls: { base: 'https://google.com', test: 'https://google.jp' }
 };
 const nullit = () => {
   ogle = null;
