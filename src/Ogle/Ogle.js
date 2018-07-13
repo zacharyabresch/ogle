@@ -11,8 +11,6 @@ const {
  * Class for visual diffing between domain
  * @param {Object}  options                                 - The parameter object
  * @param {Object}  options.urls                            - The urls object
- * @param  {String} options.urls.base                       - The base URL
- * @param  {String} options.urls.test                       - The comparison URL
  * @param  {String} [options.imagesPath='./ogle/images']    - The path to images
  * @return {Object}                                         - The Ogle instance
  */
@@ -41,6 +39,11 @@ class Ogle {
     return Promise.all(this.promises).catch(err => console.error(err));
   }
 
+  /**
+   * Captures a pair of urls
+   * @param  {Map} urlMap - The Map of URL data
+   * @return {Promise}        A Promise?
+   */
   capturePair(urlMap) {
     debug('capturing pair: ', urlMap);
     const paths = buildPathMap(urlMap, this.imagesPath);
@@ -59,10 +62,19 @@ class Ogle {
     return this.differ.createDiff(LOOKS_SAME_OPTIONS(paths));
   }
 
+  /**
+   * `urls` getter
+   * @return {Object} The corresponding urls object or array
+   */
   get urls() {
     return this[SYMBOLS.urls];
   }
 
+  /**
+   * `urls` setter
+   * @param  {Object} data The data to set
+   * @return {Object}      The `urlSet`
+   */
   set urls(data) {
     const urlSet = new Set();
     if (Array.isArray(data)) {
