@@ -83,6 +83,7 @@ ogle
 
 ## TODO:
 
+- [ ] Complete spec suite
 - [ ] Error handling
 - [ ] Argument validation
 - [ ] Configure file (i.e. `.oglerc` or something)
