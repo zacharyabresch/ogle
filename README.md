@@ -9,7 +9,6 @@ Ogle a pair(s) of domains and find the `diff`erences. (ya' know, like that bar-c
 - [ ] Configure file (i.e. `.oglerc` or something)
 - [ ] Documentation on GH pages
 - [ ] Improved configuration options
--
 
 ## Installation
 
@@ -57,10 +56,13 @@ Check out `example.js` for up to date details but:
 ```
 const Ogle = require('./Ogle');
 
+// Use these options to a diff one URL pair
 const options = {
   urls: { base: 'https://google.com', test: 'https://google.jp' }
 };
 
+
+// Use these options to diff multiple URL pairs
 // const options = {
 //   urls: [
 //     { name: 'google', base: 'https://google.com', test: 'https://google.jp' },
@@ -80,5 +82,8 @@ ogle
 
 ## Development
 
-- Want to contribute? Awesome! Submit a pull request!
-- Find an issue? Got a feature/enhancement idea? Submit an issue!
+- Want to contribute? Awesome! [Submit a pull request][1]!
+- Find an issue? Got a feature/enhancement idea? [Submit an issue][2]!
+
+[1]: https://github.com/zacharyabresch/ogle/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc
+[2]: https://github.com/zacharyabresch/ogle/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc
