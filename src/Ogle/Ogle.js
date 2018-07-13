@@ -71,8 +71,8 @@ class Ogle {
         urlSet.add(urlMap);
       });
     } else {
-      data.name = data.name || 'single';
-      urlSet.add(new Map(Object.entries(data)));
+      const newData = { ...data, name: data.name || 'single' };
+      urlSet.add(new Map(Object.entries(newData)));
     }
     this[SYMBOLS.urls] = urlSet;
   }
